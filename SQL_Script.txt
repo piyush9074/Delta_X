@@ -1,0 +1,68 @@
+--------------------Actor Table---------------------------
+CREATE TABLE [dbo].[Actor] (
+    [id]            INT          IDENTITY (10, 1) NOT NULL,
+    [Name]          VARCHAR (50) NOT NULL,
+    [Date_of_Birth] DATE         NOT NULL,
+    [Bio]           VARCHAR (50) NULL,
+    CONSTRAINT [PK_Actor] PRIMARY KEY CLUSTERED ([id] ASC)
+);
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Actor]
+    ON [dbo].[Actor]([Name] ASC);
+
+
+GO
+CREATE NONCLUSTERED INDEX [IX_Actor_1]
+    ON [dbo].[Actor]([id] ASC);
+	
+--------------------------------------------------------------
+
+
+
+
+---------------------Movie Table------------------------------
+CREATE TABLE [dbo].[Movie] (
+    [Id]              INT           IDENTITY (1, 1) NOT NULL,
+    [Name]            VARCHAR (50)  NOT NULL,
+    [Date_of_Release] DATE          NOT NULL,
+    [fk_producer]     VARCHAR (50)  NOT NULL,
+    [Plot]            VARCHAR (150) NULL,
+    CONSTRAINT [PK_Movie] PRIMARY KEY CLUSTERED ([Id] ASC),
+    CONSTRAINT [AK_Name] UNIQUE NONCLUSTERED ([Name] ASC),
+    FOREIGN KEY ([fk_producer]) REFERENCES [dbo].[Producer] ([Name])
+);
+
+----------------------------------------------------------------
+
+
+
+
+
+-----------------------MovieActor Table-------------------------
+CREATE TABLE [dbo].[Movie_Actor] (
+    [id]        INT          IDENTITY (1, 1) NOT NULL,
+    [MovieName] VARCHAR (50) NOT NULL,
+    [ActorName] VARCHAR (50) NOT NULL,
+    CONSTRAINT [PK_Movie_Actor] PRIMARY KEY CLUSTERED ([id] ASC),
+    CONSTRAINT [FK_Movie_Actor_Actor] FOREIGN KEY ([ActorName]) REFERENCES [dbo].[Actor] ([Name]),
+    CONSTRAINT [FK_Movie_Actor_Movie] FOREIGN KEY ([MovieName]) REFERENCES [dbo].[Movie] ([Name])
+);
+--------------------------------------------------------------------------
+
+------------------------Producer Table------------------------------------
+
+CREATE TABLE [dbo].[Producer] (
+    [id]            INT          IDENTITY (1, 1) NOT NULL,
+    [Name]          VARCHAR (50) NOT NULL,
+    [Date_of_Birth] DATE         NOT NULL,
+    [Company]       VARCHAR (50) NULL,
+    [bio]           VARCHAR (50) NULL,
+    CONSTRAINT [PK_Producer] PRIMARY KEY CLUSTERED ([id] ASC)
+);
+
+
+GO
+CREATE UNIQUE NONCLUSTERED INDEX [IX_Producer]
+    ON [dbo].[Producer]([Name] ASC);
+
+
