@@ -42,7 +42,7 @@ namespace Delta_XServiceLayer.Controllers
         }
 
         [HttpGet]
-        public JsonResult GetAllProducer()
+        public JsonResult GetAllProducers()
         {
             List<Producer> prodlst = new List<Producer>();
 
